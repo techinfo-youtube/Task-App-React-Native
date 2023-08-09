@@ -1,7 +1,7 @@
 # Task-App-React-Native
 React Native Task App Code Techinfoyt 
-# Thank You Subscribe And Following Techinfyt Youtube Channel
- 😎Here is React Native Playlist link 👇
+# Thank You ! Subscribe And Follow Techinfyt Youtube Channel
+ 😎Here is React Native Playlist link 👉
 https://www.youtube.com/playlist?list=PLuHGmgpyHfRyFfNy4sYsLH-tiovC2J2IC
 
 ✋ Please Like the video and subscribe to techinfoyt channel!
