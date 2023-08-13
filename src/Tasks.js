@@ -12,7 +12,18 @@ import TaskItem from "./components/TaskItem";
 import AddTask from "./components/AddTask";
 
 const Tasks = () => {
+  const [showModal, setShowModal] = useState(false);
   const [taskList, setTaskList] = useState([]);
+
+  // handle modal
+  const handleModal = () => {
+    setShowModal(true);
+  };
+
+  // hide modal
+  const handleHideModal = () => {
+    setShowModal(false);
+  };
 
   //add taks vbutton
   const handleAddTskButton = (task) => {
@@ -20,6 +31,7 @@ const Tasks = () => {
       ...prevTaks,
       { task: task, id: Math.random().toString() },
     ]);
+    handleHideModal();
   };
 
   //handle Delete
@@ -30,8 +42,13 @@ const Tasks = () => {
 
   return (
     <View style={styles.container}>
-      <AddTask handleAddTskButton={handleAddTskButton} />
+      <AddTask
+        handleHideModal={handleHideModal}
+        handleAddTskButton={handleAddTskButton}
+        visible={showModal}
+      />
 
+      <Button title="ADD TASK" onPress={handleModal} />
       <Text style={styles.border}></Text>
       {taskList.length > 0 ? (
         <Text style={styles.textTitle}>Your Tasks :</Text>
