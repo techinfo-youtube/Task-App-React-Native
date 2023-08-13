@@ -1,40 +1,61 @@
-import { View, Text, TextInput, Button, StyleSheet } from "react-native";
+import {
+  View,
+  Text,
+  TextInput,
+  Button,
+  StyleSheet,
+  ScrollView,
+  FlatList,
+} from "react-native";
 import React, { useState } from "react";
+import TaskItem from "./components/TaskItem";
+import AddTask from "./components/AddTask";
 
 const Tasks = () => {
-  const [task, setTask] = useState("");
   const [taskList, setTaskList] = useState([]);
 
-  //handle input valus
-  const handleInputValue = (inputTask) => {
-    setTask(inputTask);
+  //add taks vbutton
+  const handleAddTskButton = (task) => {
+    setTaskList((prevTaks) => [
+      ...prevTaks,
+      { task: task, id: Math.random().toString() },
+    ]);
   };
 
-  //add taks vbutton
-  const handleAddTskButton = () => {
-    setTaskList((prevTaks) => [...prevTaks, task]);
+  //handle Delete
+  const handleDelete = (id) => {
+    setTaskList((currentList) => currentList.filter((t) => t.id !== id));
+    console.log("Delete Item Called");
   };
+
   return (
     <View style={styles.container}>
-      <View style={styles.inputContainer}>
-        <TextInput
-          onChangeText={handleInputValue}
-          style={styles.inputBox}
-          placeholder="Add your Taks"
-        />
-        <Button onPress={handleAddTskButton} title="Add Task" />
-      </View>
-      <View>
-        <Text style={styles.border}></Text>
+      <AddTask handleAddTskButton={handleAddTskButton} />
+
+      <Text style={styles.border}></Text>
+      {taskList.length > 0 ? (
         <Text style={styles.textTitle}>Your Tasks :</Text>
-        <View>
-          {taskList?.map((taskItem, index) => (
-            <Text style={styles.taskItem} key={index}>
-              {taskItem}
-            </Text>
-          ))}
-        </View>
-      </View>
+      ) : (
+        <Text style={styles.textTitle}>No Tasks :</Text>
+      )}
+
+      <FlatList
+        data={taskList}
+        renderItem={({ item, index }) => (
+          <TaskItem handleDelete={handleDelete} item={item} index={index} />
+        )}
+        keyExtractor={(item, index) => {
+          return index;
+        }}
+      />
+
+      {/* <ScrollView>
+       {taskList?.map((taskItem, index) => (
+              <Text style={styles.taskItem} key={index}>
+                {taskItem}
+              </Text>
+            ))} 
+      </ScrollView> */}
     </View>
   );
 };
@@ -44,20 +65,7 @@ const styles = StyleSheet.create({
     paddingTop: 50,
     paddingHorizontal: 15,
   },
-  inputContainer: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
-    marginBottom: 20,
-  },
-  inputBox: {
-    width: "75%",
-    borderWidth: 1,
-    borderColor: "#cccccc",
-    borderRadius: 10,
-    padding: 5,
-    paddingLeft: 15,
-  },
+
   textTitle: {
     marginTop: 10,
     color: "blue",
